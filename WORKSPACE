@@ -1,4 +1,4 @@
-workspace(name = "prototype")
+workspace(name = "bazel-external-toolchain-rules")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -31,3 +31,17 @@ container_repositories()
 load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 container_deps()
+
+load("//bazel/macros:load_all.bzl", "register_external_toolchains")
+
+register_external_toolchains(
+    name = "external_toolchains",
+    toolchains = {
+        "//bazel/toolchains:helm.toolchain": "bazel_toolchain_helm",
+        "//bazel/toolchains:yq.toolchain": "bazel_toolchain_yq",
+    },
+)
+
+load("@external_toolchains//:deps.bzl", "install_toolchains")
+
+install_toolchains()
