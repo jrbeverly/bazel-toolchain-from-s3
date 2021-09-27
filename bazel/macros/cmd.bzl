@@ -50,7 +50,44 @@ def _aws_profile(awsrc = {}):
     extra_flags = ["--profile", awsrc["profile"]] if "profile" in awsrc else []
     extra_environment = {"AWS_CONFIG_FILE": awsrc["profile_location"]} if "profile_location" in awsrc else {}
     return (extra_flags, extra_environment)
-  
+
+def awsrc_default_path(ctx):
+    return ctx.os.environ.get("BAZEL_AWSRC", "")
+
+def read_awsrc(ctx, filename):
+    """Utility function to parse the basic .bazel-awsrc file.
+
+    Args:
+      ctx: The repository context of the repository rule calling this utility
+        function.
+      filename: the name of the .netrc file to read
+    Returns:
+      dict mapping a machine names to a dict with the information provided
+      about them
+    """
+    contents = ctx.read(filename)
+    awsrc = {}
+    for line in contents.splitlines():
+        if line.startswith("#"):
+            continue
+
+        if line == "":
+            continue
+
+        tokens = [
+            w.strip()
+            for w in line.split("=")
+            if len(w.strip()) > 0
+        ]
+        if len(tokens) > 2:
+            if line.contains("#"):
+                fail("{} does not support trailing comments. Line was [{}] but wanted key=value".format(filename, line))
+            fail("{} does not match the expected format. Line was [{}] but wanted key=value".format(filename, line))
+
+        awsrc[tokens[0]] = tokens[1]
+
+    return awsrc
+
 def aws_s3_cp(repository_ctx, tool_path, s3_uri, local_path, awsrc = {}):
     """Downloads the archive from AWS S3 using the AWS CLI.
 
