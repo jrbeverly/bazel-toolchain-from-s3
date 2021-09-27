@@ -5,7 +5,7 @@ Version=3.6.3
 OS=linux
 CPU=x86_64
 Executable=helm
-S3ObjectPath=s3://jbeverly-artifact-storage-bucket-123123123/helm-v3.6.3-linux-amd64.tar.gz
+URL=s3://jbeverly-artifact-storage-bucket-123123123/helm-v3.6.3-linux-amd64.tar.gz
 Sha256Sum=07c100849925623dc1913209cd1a30f0a9b80a5b4d6ff2153c609d11b043e262
 ArchivePrefix=linux-amd64
 
@@ -15,7 +15,7 @@ CPU=x86_64
 Executable=helm
 Sha256Sum=84a1ff17dd03340652d96e8be5172a921c97825fd278a2113c8233a4e8db5236
 ArchivePrefix=darwin-amd64
-S3ObjectPath=s3://jbeverly-artifact-storage-bucket-123123123/helm-v3.6.3-darwin-amd64.tar.gz
+URL=s3://jbeverly-artifact-storage-bucket-123123123/helm-v3.6.3-darwin-amd64.tar.gz
 
 [windows_amd64]
 OS=windows
@@ -23,4 +23,4 @@ CPU=x86_64
 Executable=helm.exe
 Sha256Sum=797d2abd603a2646f2fb9c3fabba46f2fabae5cbd1eb87c20956ec5b4a2fc634
 ArchivePrefix=windows-amd64
-S3ObjectPath=s3://jbeverly-artifact-storage-bucket-123123123/helm-v3.6.3-windows-amd64.zip
+URL=s3://jbeverly-artifact-storage-bucket-123123123/helm-v3.6.3-windows-amd64.zip
